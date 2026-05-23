@@ -34,7 +34,7 @@ If you receive an error, Python may either not be installed or not added to the 
 
 If Python is installed successfully, create a virtual environment for the project using the following command:
 
-python -m venv Event_Search_Agent_VENV
+'python -m venv Event_Search_Agent_VENV'
 
 ## Step 6: Configure VS Code to Use the Virtual Environment
 
@@ -52,10 +52,10 @@ The virtual environment should activate automatically when opening the VS Code t
 
 If it does not, activate it manually using the following command:
 
-.\Event_Search_Agent_VENV\Scripts\activate
+'.\Event_Search_Agent_VENV\Scripts\activate'
 
 ## Step 8: Verify the Virtual Environment Configuration
 
 Run the following command to confirm that the virtual environment is correctly configured:
 
-python --version
+'python --version'
