@@ -1,0 +1,113 @@
+# =========================================================
+# FASTAPI BACKEND
+# =========================================================
+
+fastapi                 # Main backend API framework
+uvicorn[standard]       # ASGI production server
+starlette               # FastAPI underlying framework
+
+
+# =========================================================
+# LANGCHAIN + AGENTIC AI
+# =========================================================
+
+langchain               # Core LangChain framework
+langchain-core          # LangChain base abstractions
+langchain-community     # Community integrations
+langchain-openai        # OpenAI/OpenRouter integrations
+langgraph               # Multi-agent orchestration framework
+langsmith               # Tracing, debugging, monitoring
+
+
+# =========================================================
+# OPENROUTER / LLM CONNECTIVITY
+# =========================================================
+
+openai                  # OpenRouter compatible SDK
+tiktoken                # Token counting and token utilities
+
+
+# =========================================================
+# VECTOR DATABASE
+# =========================================================
+
+qdrant-client           # Qdrant vector database client
+
+
+# =========================================================
+# EMBEDDING + RERANKING MODELS
+# =========================================================
+
+sentence-transformers   # Embedding model framework
+transformers            # HuggingFace transformer models
+torch                   # Deep learning backend
+accelerate              # Optimized model loading/inference
+FlagEmbedding           # BGE embedding + reranker models
+rank-bm25               # BM25 keyword search ranking
+
+
+# =========================================================
+# AI MODERATION + ENTITY DETECTION
+# =========================================================
+
+gliner                  # Named Entity Recognition model
+detoxify                # Toxicity detection model
+
+
+# =========================================================
+# NLP / TEXT PROCESSING
+# =========================================================
+
+spacy                   # NLP processing framework
+nltk                    # NLP utilities/tokenization
+
+
+# =========================================================
+# DATA PROCESSING
+# =========================================================
+
+numpy                   # Numerical operations
+pandas                  # Data processing
+scikit-learn            # ML utilities
+scipy                   # Scientific computing
+
+
+# =========================================================
+# FILES / HTTP / ASYNC
+# =========================================================
+
+aiofiles                # Async file handling
+httpx                   # Async HTTP client
+requests                # HTTP requests
+
+
+# =========================================================
+# CONFIGURATION MANAGEMENT
+# =========================================================
+
+python-dotenv           # Environment variable loader
+pydantic                # Data validation
+pydantic-settings       # App configuration management
+
+
+# =========================================================
+# OBSERVABILITY
+# =========================================================
+
+langfuse                # LLM observability and analytics
+
+
+# =========================================================
+# UTILITIES
+# =========================================================
+
+orjson                  # High performance JSON parser
+tenacity                # Retry handling
+jinja2                  # Prompt templating
+
+
+# =========================================================
+# TESTING
+# =========================================================
+
+pytest                  # Unit testing

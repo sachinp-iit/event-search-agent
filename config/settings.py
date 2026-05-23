@@ -1,0 +1,94 @@
+# config/settings.py
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+
+    # =====================================================
+    # FASTAPI APPLICATION
+    # =====================================================
+
+    APP_NAME: str
+    APP_VERSION: str
+    APP_HOST: str
+    APP_PORT: int
+    DEBUG: bool
+
+    # =====================================================
+    # OPENROUTER CONFIGURATION
+    # =====================================================
+
+    OPENROUTER_API_KEY: str
+    OPENROUTER_BASE_URL: str
+    OPENROUTER_MODEL: str
+    OPENROUTER_HEADER_HTTP_REFERER: str
+    OPENROUTER_HEADER_HTTP_X_TITLE: str
+
+    # =====================================================
+    # QDRANT VECTOR DATABASE
+    # =====================================================
+
+    QDRANT_HOST: str
+    QDRANT_PORT: int
+    QDRANT_COLLECTION: str
+
+    # =====================================================
+    # EMBEDDING + RERANKING MODELS
+    # =====================================================
+
+    EMBEDDING_MODEL: str
+    RERANKER_MODEL: str
+
+    # =====================================================
+    # MODERATION + NER MODELS
+    # =====================================================
+
+    TOXICITY_MODEL: str
+    NER_MODEL: str
+
+    # =====================================================
+    # TRANSCRIPT PROCESSING
+    # =====================================================
+
+    CHUNK_SIZE: int
+    CHUNK_OVERLAP: int
+    TOP_K_RESULTS: int
+
+    # =====================================================
+    # LANGSMITH OBSERVABILITY
+    # =====================================================
+
+    LANGCHAIN_TRACING_V2: bool
+    LANGCHAIN_API_KEY: str
+    LANGCHAIN_PROJECT: str
+
+    # =====================================================
+    # LANGFUSE OBSERVABILITY
+    # =====================================================
+
+    LANGFUSE_PUBLIC_KEY: str
+    LANGFUSE_SECRET_KEY: str
+    LANGFUSE_HOST: str
+
+    # =====================================================
+    # LOGGING
+    # =====================================================
+
+    LOG_LEVEL: str
+
+    # =====================================================
+    # Pydantic Settings Config
+    # =====================================================
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True
+    )
+
+
+# =========================================================
+# GLOBAL SETTINGS INSTANCE
+# =========================================================
+
+settings = Settings()
