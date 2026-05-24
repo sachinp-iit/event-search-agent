@@ -5,6 +5,8 @@ from config.settings import settings
 
 from api.routes.health_routes import router as health_router
 
+from api.routes.search_routes import router as search_router
+
 from dotenv import load_dotenv
 
 import uvicorn
@@ -31,6 +33,8 @@ app = FastAPI(
 # =========================================================
 
 app.include_router(health_router)
+
+app.include_router(search_router)
 
 
 # =========================================================
