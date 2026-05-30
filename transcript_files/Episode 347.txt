@@ -1,0 +1,85 @@
+Anna Rose:
+
+Welcome to Zero Knowledge, I’m your host Anna Rose. In this podcast we will be exploring the latest in Zero Knowledge research and the decentralized web, as well as new paradigms that promise to change the way we interact and transact online.
+
+This week I share a story I have been meaning to tell on the air for a long time. It’s a story about coincidences - involving this show and the name Zero Knowledge - and I feel like it's a really good time to share with you. 
+
+This is also, kind of officially, my first episode back after our 3 month hiatus. I have really missed doing this part of my job, I feel a little bit out of the loop, but also more clear headed, like very ready to adventure into the new frontier - things are changing now so fast, it’s gonna be hard to keep up. But hopefully, at least in our little ZK-corner of the world, we will be able to map out what's happening. This particular episode will be quite different from our usual interviews, it’ll be just me talking to you. Next week I’ll be joined by Nico and some guests in our usual format.
+
+Before I jump into this, I just wanted to share a couple updates from the ZK Podcast.
+
+First off, we have a new website and a new jingle! It was time for a refresher, and I am excited to see our visuals and audio evolving a bit. Obviously change is always a bit jarring at first, but I also think it's good. Helps to demarcate a moment in time. Maybe something that helps prompt a new direction. 
+
+Next up we have an announcement on zk13, it’s taking place on May 12 in Toronto, applications just opened, space is more limited than normal this time around, our venue caps out at 400, so we are encouraging folks who really want to join, to get their spot secured early. It is invite only, and we will prioritize previous attendees and long term members of the ZK community. If you are newer and you really want to join, just aim to get your application in early for a better chance of getting a spot. Applications to speak are also open - they are part of the same application - that will remain open until March 15th, for more info check out zksummit.com, we’ve added the link in the shownotes.
+
+Lastly, As I mentioned in the last little bonus, the ZK Podcast company is hiring, we are currently hiring for 2 roles - a content marketing manager and strategic growth lead - if you wanna listen to that bonus to get a good sense for what we are looking for please do and if you think you’ll be a good candidate please send an application.
+
+Alright that should cover our updates, so on to the story I wanted to tell. Before I dig into it though, I do need to retell a bit how this podcast got its name.
+
+As many of you know, the name Zero Knowledge was chosen originally a bit by chance. I was working at Parity Technology with my old co-host Fredrik, we wanted to start a podcast to explore all the blockchain tech we were learning about. We went 10 episodes without a name, only referring to it as “This Podcast” until we decided on the name ‘Zero Knowledge’. We knew at the highest level what it was. We knew about Zcash and we noticed that every time you mentioned it to the smart engineer, it would spark some genuine excitement and curiosity from them, so that was a good sign. But really, we ourselves weren’t actually involved in ZK research at the time we took this name back in 2018. 
+
+As more ZK research came out and our knowledge of ZK grew, so too did our knowledge about the topic as well as our connection to it. And so the ‘Zero Knowledge’ Podcast kind of manifested to actually become the Zero Knowledge Podcast. From there, I went on to run the event series: zkSummit which I mentioned earlier, I started the ZK Hack project, with all of the projects that come out of there, like the ZK Whiteboard Sessions, zkMesh and all of this work has had a focus on Zero Knowledge and the applications it enables. 
+
+But as many of you know, I have no background as a cryptographer, or an engineer. I’ve worked over the years in music, video games, and eventually in tech, but how and why I ended up working exclusively on ZK has seemed like a fluke - but was it? So that was a bit of the back story I needed to share before we can jump into the story I really want to tell you…
+
+In the summer of 2023, when the show had been around for about 5 years, I started to explore trademarks for the show and logo.  
+
+So I did a search for US trademarks for zero knowledge. I found a bunch of teams in our community, teams we know today, that had the name in their application, but there was a batch of older trademarks that caught my eye. These were from the late 90s, early 2000’s and some of them were registered by a company called “Zero-Knowledge Systems” 
+
+I switched my search on the trademark website to “Zero-Knowledge systems” to learn a bit more about them. The first result is ZKS which they applied to trademark in 2001. I was so curious, who were these guys? You can’t find that much out on these trademarks, you find out which lawyers they used, something about the types of business they run. You can also find out where the company is located. 
+
+Checking for the address of Zero-Knowledge systems - when I saw it, my heart kinda flipped. This company was registered in Montreal Canada, that’s my home town. But not just that, the company was registered on St. Laurent Blvd. If you haven’t been to Montreal, let me give you a sense for this street. It is a street full of bars and restaurants and shops. Most of the buildings have 3 stories, the facades are made of brick. Around the year 2000, I probably spent 95% of my free time on that street. I was a student, and I was also a bit of a scenester. I spent a lot of time, probably too much time, hanging out in bars, talking to people at the bars, working in a bar, definitely drinking too much in bars and St. Laurent Blvd was my spot. 
+
+I know being a bar person has pretty negative connotations today, you imagine it is sleezy and sad. And there are lots of bars like that. But our scene was way more fun, and it was like a special time in those years on that street. To be hones the Web3 scene at conferences and meetups remind me so much of that time. There were the stars, the critics, the slightly cynical OGs, the shinny eyed newbies. People today argue over L1s or L2s, or why some tech is more sophisticated, why some ecosystems are more authentic. It reminds me of back then we argued about which genre of music was most sophisticated, complicated, authentic, or underground. And then, like now, these conversations were often an entry point to learn more generally about someone, their motivation, their background, and maybe get inspired by some new insight or perspective they share with you. 
+
+Coming back to these trademarks, according to what I was seeing, Zero Knowledge Systems was located somewhere on St. Laurent Blvd from the year 1998 to at least 2001. And I had spent a lot of time on that street, but I was mainly in like an 8 block stretch of it. So I was curious, where on the street was this place. 
+
+I have not lived in Montreal for over 15 years, so I couldn’t exactly place the address just by looking at it. so I jumped on maps, typed in 3981 St-Laurent Boulevard.
+
+Woah, no freekin’ way. I couldn’t believe it. Zero Knowledge Systems in the year 2000 seemed to have been located directly across the street, and I mean DIRECTLY across the street from my favorite bar, like the bar I basically lived at during that time. Today that bar still exists, it's called Barbarrosa. Back then it was called Blizzarts, it held maybe 50-60 people standing. And I was a regular. 
+
+I was probably there about 2-3 times a week. If you worked nearby, and needed a spot to hang out, Blizzarts would have been a good option, especially in the summer when the big windows out front opened up onto St. Laurent…
+
+The crowd at this place was about 10 years older than I was, there were tons of working professionals coming by after a long day of work. 
+
+Seeing this on the map, I started to think like… did the employees of Zero Knowledge Systems also go to Blizzarts after work? Did they hang out there? Did I meet people back then from a company called Zero Knowledge Systems… did I hear them talking about all this stuff!  Did someone explain to me what the name meant to me even back then? 
+
+What an insane coincidence that 15 years later I randomly stumbled on this same name and decided to name my podcast that name, Zero Knowledge. 
+
+So that in itself is already pretty cool.
+
+I have told this first part of the story many many times. For some of you listening, you have heard it many times. It's one of the weirdest coincidences, i’ve ever experienced, feels almost eerie and I have told this story a lot.
+
+But this story actually continues. Back in April last year, a day or 2 after zkSummit11, in Athens, I was with a big group at dinner, and I was telling them about Zero-Knowledge Systems and my proximity to it. One of the guys at the table was like. Oh whoa… you hung out across the street from Zero-Knowledge systems? That company was legendary. Do you know who worked there? 
+
+I was like, not really. He was like, “a bunch of the early bitcoiners went through there” He  told me that there were only a couple companies working on digital currencies back in the late 90s. One of these was Zero-Knowledge Systems. Now this is long before Bitcoin eh? Like the late 2000’s. So it seemed like not only did Zero Knowledge Systems share the name for the niche cryptography we talk about on this show, but it also may have been an important contributor to the ideas and research that led to Bitcoin and to the blockchain ecosystem as we know it today.
+
+That night I started to dig around. The wikipedia page for Zero-Knowledge Systems is crazy. I had looked at it when I found the trademark, but I had been trying to figure out more about the company itself, I hadn’t looked that closely at the people who worked there. Now I was looking: here are some of them: Adam Back, Mike Shaver, Ian Goldberg. The founder of the company Austin Hill, and a group of the people who worked there went on to found Blockstream in 2014. But on the Wikipedia page it actually doesn’t  mention digital currencies. These folks were definitely close to the people working on these topics at their earliest inception but it’s tough to actually find out that much about this company. Most of the links are dead or squatted on by random crypto companies.
+
+Soon after this, I was introduced to someone who actually worked at Zero-Knowledge Systems, his name is Jonathan and he’s someone I hope to invite back on this show, to ask him more about what it was like to work at Zero Knowledge Systems and the ideas floating around at the time. Also to discuss what he’s worked on since because that’s pretty interesting as well.
+
+Before I recorded this episode, I did want to check a few things, so I jumped on a call with him to ask a couple questions. 
+
+Here were some of them:
+
+1. Did Zero Knowledge Systems actually work on digital payments since this wasn’t clear from the Wikipedia page, He told me that yes, they had done some work on this implementing an early Chaumian digital currency but nothing that really took off. They were more well known for a project called Freedom, which was similar to what later became Tor.  
+
+2. What happened to them? He said, the company started off edgy and made waves in the Montreal tech scene. They also helped highlight the need for privacy on the internet, long before Snowden did, and they championed the ethos of open source.  But at some point, they stopped working on Freedom, so they pivoted to something safer. The company was renamed to Radialpoint and was eventually sold. 
+
+3. The last question, and maybe the one that was the most important to me,  Was the office Zero knowledge systems actually on st. laurent blvd, like because i thought maybe this was just a PO box, or the address for administration but that the office was somewhere else.  But Jonathan did confirm it was indeed on St Laurent at that time, there were about 100 people who worked there. They moved the office to a bigger location more downtown sometime around 2001. 
+
+But here’s a bonus, he told me there had been a giant red sign with their logo that read ZERO KNOWLEDGE on the building on St Laurent. So I probably saw that sign every time I walked out or stumbled of that bar. I want to see if i can dig up pictures from the window of the bar looking out, it would be so cool if I could find this.
+
+So yeh, this has obviously got me asking, is this why I was keen to pick the name Zero Knowledge? Had it been wedged into my psyche for like 15+ years? It’s so wild. 
+
+There are many other questions too, like who were all the people working there, beyond those listed on the Wikipedia page, What did those people go on to do? What was Freedom all about and how was it built, how far did they get with it and how did they make the decision to stop working on it? Did they actually work on ZK tech itself, or was it just their namesake, I mean, I don’t think ZK was very usable at the time, but what did they even imagine it would be used for in the future? 
+
+Last but not least, I would love to know if anyone from Zero-Knowledge Systems ever went across the street to hang out in a bar called Blizzarts in the years 2000/2001. That would be so interesting to know.
+
+To me this feels like the start of a story, because I think it is. I am going to be doing a bit of a side quest this year, to learn more about Zero-Knowledge Systems, this sort of oddball montreal tech company from the year 2000.  
+
+I am going to try to get Jonathan and some other folks who worked there on the show, to help me better understand what it was like working on this kind of technology back then. There is a bit of a call out here -  if you worked at Zero-Knowledge Systems, or know someone who did and you think this could add to the story, get in touch - send us an email at  hello @ zeroknowledge.fm.  
+
+Next week, we start back with new interviews with teams doing amazing things in ZK today, over the next few months we will be covering Quantum Computing, AI, Lattices and all sorts of great topics around ZK.
+
+Once again, I am so excited to be back and excited to dive back in with you. I want to say thank you to the podcast team, Rachel, Henrik and Tanya and to our listeners, thanks for listening.
