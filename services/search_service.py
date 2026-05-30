@@ -1,8 +1,10 @@
 # services/search_service.py
 
-from langchain_core.language_models.chat_models import BaseChatModel
+from vector_db.semantic_query import SemanticQueryEngine
 
 from prompts.prompt_manager import render_prompt
+
+from langchain_core.language_models.chat_models import BaseChatModel
 
 
 # =========================================================
@@ -11,17 +13,36 @@ from prompts.prompt_manager import render_prompt
 
 class SearchService:
     
-    def __init__(self, llm: BaseChatModel):
-        self.llm = llm
+    def __init__(
+        self, 
+        llm: BaseChatModel, 
+        semantic_query_engine: SemanticQueryEngine
+        ):
+            self.llm = llm
+            self.semantic_query_engine = semantic_query_engine
+            
+    
+    # Semantic Search
+    
+    async def semantic_search(
+        self,
+        user_query: str
+    ) -> str:
         
-    # GENERATE SEMANTIC SEARCH RESPONSE
-    def generate_semantic_search_response(
-        self, user_query: str,
-        transcript_chunks: list
-    ):
+        # Retrieve relevant transcripts
+        search_results = await self.semantic_query_engine.semantic_search (
+            query = user_query
+        )
         
-        # RENDER PROMPT TEMPLATE
-        final_prompt = render_prompt(
+        # Extract Payloads
+        
+        transcript_chunks = [
+            result["payload"]
+            for result in search_results
+        ]
+        
+        # Render Prompt
+        final_prompt = render_prompt (
             template_name = "search_prompts/semantic_search_prompt.jinja2",
             
             variables = {
@@ -30,8 +51,10 @@ class SearchService:
             }
         )
         
-        # LLM Invocation
-        response = self.llm.invoke(final_prompt)
         
-        # Return Response
+        # LLM Invocation
+        response = await self.llm.ainvoke (
+            final_prompt
+        )
+        
         return response.content
