@@ -53,6 +53,13 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int
     CHUNK_OVERLAP: int
     TOP_K_RESULTS: int
+    
+    
+    # =========================================================
+    # RAW TRANSCRIPT DIRECTORY
+    # =========================================================
+    
+    RAW_TRANSCRIPTS_DIRECTORY: str
 
     # =====================================================
     # LANGSMITH OBSERVABILITY
@@ -75,6 +82,25 @@ class Settings(BaseSettings):
     # =====================================================
 
     LOG_LEVEL: str
+    
+    # =====================================================
+    # METADATA - INDEXED FIELDS
+    # =====================================================    
+    
+    EVENT_NAME: str
+    EVENT_TOPIC: str
+    SPEAKER_NAME: str
+    EVENT_DATE: str
+    EVENT_COMPANY: str
+    EVENT_LOCATION: str
+    DOMAIN: str
+    CATEGORY: str
+    
+    # =========================================================
+    # EMBEDDING CONFIGURATION
+    # =========================================================
+
+    EMBEDDING_DIMENSION: int
 
     # =====================================================
     # Pydantic Settings Config
@@ -85,7 +111,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=True
     )
-
+    
 
 # =========================================================
 # GLOBAL SETTINGS INSTANCE

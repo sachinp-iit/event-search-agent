@@ -1,4 +1,4 @@
-# dependency/collection_dependency.py
+# dependency/qdrant_collection_dependency.py
 
 from fastapi import Depends
 
@@ -6,23 +6,23 @@ from qdrant_client import AsyncQdrantClient
 
 from dependencies.qdrant_dependency import qdrant_client_dependency
 
-from vector_db.collection_manager import CollectionManager
+from vector_db.qdrant_collection_manager import QdrantCollectionManager
 
 
 # =========================================================
-# COLLECTION MANAGER DEPENDENCY
+# QDRANT COLLECTION MANAGER DEPENDENCY
 # =========================================================
 
-async def collection_manager_depedency(
+async def qdrant_collection_manager_depedency(
     qdrant_client: AsyncQdrantClient = Depends(
         qdrant_client_dependency
     )
-) -> CollectionManager:
+) -> QdrantCollectionManager:
     
     """
-    Dependency injection provider for CollectionManager
+    Dependency injection provider for QDrantCollectionManager
     """
     
-    return CollectionManager(
+    return QdrantCollectionManager(
         qdrant_client = qdrant_client
     )
