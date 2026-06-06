@@ -53,7 +53,8 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int
     CHUNK_OVERLAP: int
     TOP_K_RESULTS: int
-    
+    INGESTION_BATCH_SIZE: int
+    MAX_CONCURRENT_BATCHES: int
     
     # =========================================================
     # RAW TRANSCRIPT DIRECTORY

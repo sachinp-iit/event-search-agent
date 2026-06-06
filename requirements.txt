@@ -18,7 +18,7 @@ langchain-openai        # OpenAI/OpenRouter integrations
 langgraph               # Multi-agent orchestration framework
 langsmith               # Tracing, debugging, monitoring
 langchain-text-splitter # Recursive Text Splitter
-
+langchain-huggingface   # Langchain Embedding
 
 # =========================================================
 # OPENROUTER / LLM CONNECTIVITY
