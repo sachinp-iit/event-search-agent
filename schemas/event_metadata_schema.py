@@ -24,7 +24,6 @@ class EventMetadataSchema(BaseModel):
     event_start_date: datetime
     event_end_date: datetime | None = None
     
-    moderator_name: str | None = None
     author_name: str | None = None
     speaker_names: list[str] = Field(default_factory=list)
     

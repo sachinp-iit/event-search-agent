@@ -34,6 +34,12 @@ tiktoken                # Token counting and token utilities
 
 qdrant-client           # Qdrant vector database client
 
+# =========================================================
+# SQL DATABASE
+# =========================================================
+
+sqlalchemy              # Sql Provider
+aioodbc                 # Async Driver for Database Connectivity
 
 # =========================================================
 # EMBEDDING + RERANKING MODELS

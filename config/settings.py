@@ -31,6 +31,13 @@ class Settings(BaseSettings):
     QDRANT_HOST: str
     QDRANT_PORT: int
     QDRANT_COLLECTION: str
+    
+    
+    # =====================================================
+    # SQL SERVER DATABASE
+    # =====================================================
+    
+    SQL_SERVER_CONNECTION_STRING: str
 
     # =====================================================
     # EMBEDDING + RERANKING MODELS
