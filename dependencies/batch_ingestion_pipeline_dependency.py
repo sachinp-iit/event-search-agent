@@ -10,6 +10,8 @@ from storage.transcript_loader import (
     TranscriptLoader
 )
 
+from services.metadata_enrichment_service import MetadataEnrichmentService
+
 from utils.chunking import (
     TranscriptChunker
 )
@@ -25,6 +27,8 @@ from vector_db.vector_indexer import (
 from dependencies.transcript_loader_dependency import (
     transcript_loader_dependency
 )
+
+from dependencies.metadata_enrichment_service_dependency import metadata_enrichment_service_dependency
 
 from dependencies.transcript_chunker_dependency import (
     transcript_chunker_dependency
@@ -50,6 +54,10 @@ async def batch_ingestion_pipeline_dependency (
         transcript_loader_dependency    
     ),
     
+    metadata_enrichment_service: MetadataEnrichmentService = Depends (
+        metadata_enrichment_service_dependency
+    ),
+    
     transcript_chunker: TranscriptChunker = Depends (
         transcript_chunker_dependency
     ),
@@ -69,6 +77,7 @@ async def batch_ingestion_pipeline_dependency (
     
     return BatchIngestionPipeline (
         transcript_loader = transcript_loader,
+        metadata_enrichment_service = metadata_enrichment_service,
         transcript_chunker = transcript_chunker,
         batch_processor = batch_processor,
         vector_indexer = vector_indexer

@@ -4,6 +4,8 @@ from storage.transcript_loader import (
     TranscriptLoader
 )
 
+from services.metadata_enrichment_service import MetadataEnrichmentService
+
 from utils.chunking import (
     TranscriptChunker
 )
@@ -38,6 +40,7 @@ class BatchIngestionPipeline:
     def __init__(
         self, 
         transcript_loader: TranscriptLoader,
+        metadata_enrichment_service: MetadataEnrichmentService,
         transcript_chunker: TranscriptChunker,
         batch_processor: BatchProcessor,
         vector_indexer: VectorIndexer
@@ -45,36 +48,54 @@ class BatchIngestionPipeline:
         
         # Dependencies
         self.transcript_loader = transcript_loader
+        self.metadata_enrichment_service = metadata_enrichment_service
         self.transcript_chunker = transcript_chunker
         self.batch_processor = batch_processor
         self.vector_indexer = vector_indexer
         
     
-    # Ingest all transcripts
-    async def ingest_all_transcripts (self) -> None:
-        # Load Transcripts
-        transcripts = await (self.transcript_loader.load_all_transcripts())
+    # Ingest Single Event
+    async def ingest_event(self, event_id: int, transcript_file_name: str) -> None:
         
-        # Chunk Transcripts
-        transcript_chunks = await (self.transcript_chunker.chunk_transcripts(transcripts = transcripts))
+        # Load Transcript
+        transcript = await (
+            self.transcript_loader.load_transcript(
+                transcript_file_name
+            )
+        )
+        
+        # Chunk Transcript
+        chunks = await (self.transcript_chunker.chunk_transcript(
+            transcript
+        ))
+        
+        # Build Chunk Objects
+        transcript_chunks = [
+            {
+                "chunk_sequence": index,
+                "transcript_text": chunk
+            }
+            
+            for index, chunk in enumerate(chunks)
+        ]
+        
+        # Enrich with SQL Metadata
+        enriched_chunks = await (
+            self.metadata_enrichment_service
+            .enrich_chunks(
+                chunks = transcript_chunks,
+                event_id = event_id
+            )
+        )
         
         # Validate Chunks
         validated_chunks = [
             TranscriptChunkSchema(**chunk).model_dump()
-            for chunk in transcript_chunks
+            for chunk in enriched_chunks
         ]
         
-        # Process in batches
+        # Indexed Enriched Chunks in Batches
         await self.batch_processor.process_batches(
             items = validated_chunks,
-            processor = self._index_batch
-        )
-        
-
-    # Process in Batches
-    async def _index_batch(self, batch: list[dict]) -> None:
-        
-        # Index Chunks
-        await self.vector_indexer.index_transcript_chunks(
-            transcript_chunks = batch
+            processor = self.vector_indexer.index_transcript_chunks
         )
