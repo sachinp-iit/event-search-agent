@@ -17,7 +17,7 @@
 -- ===========================================================================================================
 CREATE TABLE Events (
     EventId BIGINT IDENTITY(1,1) PRIMARY KEY,
-    EventName VARCHAR(75) NOT NULL,
+    EventName VARCHAR(500) NOT NULL,
     EventTopic VARCHAR(150) NOT NULL,
     EventAgenda VARCHAR(MAX) NULL,
     DomainName VARCHAR(75) NULL,
