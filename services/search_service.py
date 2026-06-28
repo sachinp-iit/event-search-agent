@@ -6,6 +6,7 @@ from prompts.prompt_manager import render_prompt
 
 from langchain_core.language_models.chat_models import BaseChatModel
 
+from schemas.query_understanding_schema import QueryUnderstandingSchema
 
 # =========================================================
 # SEARCH SERVICE
@@ -27,7 +28,7 @@ class SearchService:
     async def semantic_search(
         self,
         user_query: str
-    ) -> str:
+    ) -> list[dict]:
         
         # Retrieve relevant transcripts
         search_results = await self.semantic_query_engine.semantic_search (

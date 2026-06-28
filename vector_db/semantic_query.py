@@ -3,6 +3,7 @@
 from qdrant_client import AsyncQdrantClient
 
 from qdrant_client.models import (
+    Condition,
     FieldCondition,
     Filter,
     MatchValue
@@ -12,6 +13,8 @@ from config.settings import settings
 
 from langchain_core.embeddings import Embeddings
 
+from schemas.query_understanding_schema import QueryUnderstandingSchema
+
 
 # =========================================================
 # SEMANTIC QUERY ENGINE
@@ -19,61 +22,60 @@ from langchain_core.embeddings import Embeddings
 
 class SemanticQueryEngine:
     
-    def __init__(self, qdrant_client: AsyncQdrantClient, embedding_model: Embeddings):
+    def __init__(self, qdrant_client: AsyncQdrantClient, embedding_model: Embeddings) -> None:
         
-        self.qdrant_client = qdrant_client
-        
+        self.qdrant_client = qdrant_client        
         self.embedding_model = embedding_model
         
     
-    # Semantic Search
-    
-    async def semantic_search (
-        self, 
-        query: str, 
-        top_k: int | None = None,
-        metadata_filters: dict | None = None
-        ) -> list[dict]:
+    # Semantic Search    
+    async def semantic_search (self, query: QueryUnderstandingSchema) -> list[dict]:
         
         """
         Semantic vector search against transcript collection.
         """
         
         # Query Embedding
-        query_embedding = await self.embedding_model.aembed_query(query)
+        query_embedding = await self.embedding_model.aembed_query(query.normalized_query)
         
-        # Optional Filters
-        query_filters = None
+        # Metadata Filters
+        conditions: list[Condition] = []
         
-        if metadata_filters:
-            conditions = []
+        filter_mapping = {
+            "event_name": query.event_name,
+            "event_topic": query.event_topic,
+            "speaker_name": query.speaker_name,
+            "event_company": query.company_name,
+            "domain": query.domain,
+            "category": query.category,
+            "event_location": query.event_location
+        }
+        
+        for key, value in filter_mapping.items():
             
-            for key, value in metadata_filters.items():
-                conditions.append(
-                    FieldCondition (
-                        key = key, 
-                        match = MatchValue(value = value)
-                    )
-                )
+            if value is not None:
+                conditions.append(FieldCondition(key = key, match = MatchValue(value = value)))
                 
-            query_filter = Filter (
-                must = conditions
-            )
+                
+        query_filter = None
+        
+        if conditions:
+            query_filter = Filter(must = conditions)
             
         # Vector Search
-        search_results = await self.qdrant_client.query_points (
+        search_results = await self.qdrant_client.query_points(
             collection_name = settings.QDRANT_COLLECTION,
-            query_vector = query_embedding,
+            query = query_embedding,
             query_filter = query_filter,
-            limit = top_k or settings.TOP_K_RESULTS,
+            limit = query.top_k,
             with_payload = True
         )
         
-        # Normalized Response
-        results = []
+        # Normalize Results
+        results: list[dict] = []
         
         for point in search_results.points:
-            results.append (
+            results.append(
                 {
                     "id": point.id,
                     "score": point.score,
