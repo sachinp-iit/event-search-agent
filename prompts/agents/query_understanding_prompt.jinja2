@@ -10,6 +10,22 @@ Never answer the user's question.
 Only extract structured information.
 
 ----------------------------------------------------------
+CONVERSATION HISTORY
+----------------------------------------------------------
+{% if conversation_history %}
+{% for message in conversation_history %}
+
+{{ message.role | upper }}
+{{ message.content }}
+
+{% endfor %}
+{% else %}
+
+No previous conversation.
+
+{% endif %}
+
+----------------------------------------------------------
 USER QUERY
 ----------------------------------------------------------
 

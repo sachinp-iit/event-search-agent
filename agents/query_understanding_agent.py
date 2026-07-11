@@ -27,7 +27,11 @@ class QueryUnderstadingAgent:
         )
         
     # Analyze Query
-    async def analyze_query(self, user_query: str) -> QueryUnderstandingSchema:
+    async def analyze_query(
+        self, 
+        user_query: str,
+        conversation_history: list[dict] | None = None
+        ) -> QueryUnderstandingSchema:
         """
         Analyze a user query and return a structured representation.
         """        
@@ -38,7 +42,11 @@ class QueryUnderstadingAgent:
                 "agents/"
                 "query_understanding_prompt.jinja2"
                 ),
-            variables = {"user_query": user_query}
+            variables = {
+                "user_query": user_query,
+                "conversation_history":
+                    conversation_history or []
+                }
         )
         
         # LLM

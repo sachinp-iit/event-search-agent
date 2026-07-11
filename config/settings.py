@@ -109,6 +109,11 @@ class Settings(BaseSettings):
     # =========================================================
 
     EMBEDDING_DIMENSION: int
+    
+    # =========================================================
+    # MEMORY MANAGEMENT
+    # =========================================================
+    MAX_HISTORY: int
 
     # =====================================================
     # Pydantic Settings Config
@@ -119,7 +124,6 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=True
     )
-    
 
 # =========================================================
 # GLOBAL SETTINGS INSTANCE

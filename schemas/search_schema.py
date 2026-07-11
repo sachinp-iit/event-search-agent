@@ -10,6 +10,13 @@ from pydantic import Field
 # =========================================================
 
 class SearchRequest(BaseModel):
+    """
+    Semantic search request.
+    """
+    
+    session_id: str = Field(
+        description = "Unique conversation session id."
+    )
     
     user_query: str = Field(
         ...,
@@ -22,6 +29,8 @@ class SearchRequest(BaseModel):
 # =========================================================
 
 class SearchResponse(BaseModel):
+    
+    session_id: str
     
     user_query: str
     

@@ -1,61 +1,55 @@
-# services/search_service.py
+from agents.answer_generation_agent import AnswerGenerationAgent
 
-from vector_db.semantic_query import SemanticQueryEngine
+from schemas.query_understanding_schema import (
+    QueryUnderstandingSchema
+)
 
-from prompts.prompt_manager import render_prompt
-
-from langchain_core.language_models.chat_models import BaseChatModel
-
-from schemas.query_understanding_schema import QueryUnderstandingSchema
+from vector_db.semantic_query import (
+    SemanticQueryEngine
+)
 
 # =========================================================
 # SEARCH SERVICE
 # =========================================================
 
 class SearchService:
-    
+
     def __init__(
-        self, 
-        llm: BaseChatModel, 
-        semantic_query_engine: SemanticQueryEngine
-        ):
-            self.llm = llm
-            self.semantic_query_engine = semantic_query_engine
-            
-    
-    # Semantic Search
-    
-    async def semantic_search(
         self,
-        user_query: str
-    ) -> list[dict]:
+        semantic_query_engine: SemanticQueryEngine,
+        answer_generation_agent: AnswerGenerationAgent
+    ) -> None:
         
-        # Retrieve relevant transcripts
-        search_results = await self.semantic_query_engine.semantic_search (
-            query = user_query
+        self.semantic_query_engine = semantic_query_engine
+        self.answer_generation_agent = answer_generation_agent
+
+    # =====================================================
+    # SEMANTIC SEARCH
+    # =====================================================
+
+    async def search(
+        self,
+        user_query: str,
+        query: QueryUnderstandingSchema
+    ) -> str:
+        """
+        Executes semantic search using the
+        structured query understanding schema.
+        """
+
+        search_results = await self.semantic_query_engine.semantic_search(
+            query=query
         )
-        
-        # Extract Payloads
-        
+
         transcript_chunks = [
             result["payload"]
             for result in search_results
         ]
         
-        # Render Prompt
-        final_prompt = render_prompt (
-            template_name = "search_prompts/semantic_search_prompt.jinja2",
-            
-            variables = {
-                "user_query": user_query,
-                "transcript_chunks": transcript_chunks
-            }
+        # Generation Response/Answer
+        answer = await self.answer_generation_agent.generate_answer(
+            user_query = user_query,
+            transcript_chunks = transcript_chunks
         )
-        
-        
-        # LLM Invocation
-        response = await self.llm.ainvoke (
-            final_prompt
-        )
-        
-        return response.content
+
+        return answer
