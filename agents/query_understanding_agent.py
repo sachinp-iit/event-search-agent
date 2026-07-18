@@ -30,7 +30,8 @@ class QueryUnderstadingAgent:
     async def analyze_query(
         self, 
         user_query: str,
-        conversation_history: list[dict] | None = None
+        conversation_history: list[dict] | None = None,
+        conversation_summary: str | None = None
         ) -> QueryUnderstandingSchema:
         """
         Analyze a user query and return a structured representation.
@@ -45,8 +46,9 @@ class QueryUnderstadingAgent:
             variables = {
                 "user_query": user_query,
                 "conversation_history":
-                    conversation_history or []
-                }
+                    conversation_history or [],
+                "conversation_summary": conversation_summary or "",
+                },
         )
         
         # LLM

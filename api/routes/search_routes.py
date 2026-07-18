@@ -10,9 +10,11 @@ from dependencies.query_understanding_dependency import get_query_understanding_
 
 from dependencies.service_dependency import get_search_service
 
-from dependencies.memory_prompt_helper_dependency import memory_prompt_helper
+from dependencies.memory_prompt_helper_dependency import get_memory_prompt_helper
 
 from memory.memory_manager import MemoryManager
+
+from memory.memory_prompt_helper import MemoryPromptHelper
 
 from dependencies.memory_dependency import get_memory_manager
 
@@ -22,6 +24,10 @@ from schemas.search_schema import (
 )
 
 from services.search_service import SearchService
+
+from services.conversation_service import ConversationService
+
+from dependencies.conversation_service_dependency import get_conversation_service
 
 # ================================================
 # API ROUTER INITIALIZATION
@@ -38,7 +44,7 @@ router = APIRouter(
 # ================================================
 
 @router.post(
-    "/",
+    "/search",
     response_model = SearchResponse
     )
 
@@ -52,6 +58,12 @@ async def semantic_search(
     ),
     memory_manager: MemoryManager = Depends (
         get_memory_manager
+    ),
+    memory_prompt_helper: MemoryPromptHelper = Depends(
+        get_memory_prompt_helper
+    ),
+    conversation_service: ConversationService = Depends (
+        get_conversation_service
     )
 ) -> SearchResponse:
     """
@@ -61,10 +73,15 @@ async def semantic_search(
     # Load Conversation Memory
     memory = memory_manager.get_memory(request.session_id)
     
+    conversation_history = memory_prompt_helper.build_context(memory)
+    
+    conversation_summary = await conversation_service.summarize_conversation(memory)
+    
     # Understanding Query
     query = await query_understanding_agent.analyze_query(
         user_query = request.user_query,
-        conversation_history = memory_prompt_helper.build_context(memory)
+        conversation_history = conversation_history,
+        conversation_summary = conversation_summary
     )
     
     # Execute Search
