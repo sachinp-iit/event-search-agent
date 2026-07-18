@@ -7,34 +7,6 @@ pipeline where each agent has a single responsibility. The agents
 communicate through a shared `AgentState` and execute sequentially to
 transform a user query into a grounded response.
 
-``` text
-                User Query
-                     │
-                     ▼
-      QueryUnderstandingAgent
-                     │
-      Structured Query Metadata
-                     │
-                     ▼
-           RetrievalAgent
-                     │
-      Relevant Transcript Chunks
-                     │
-                     ▼
-      AnswerGenerationAgent
-                     │
-            Final Response
-
-(Optional Offline Pipeline)
-
-Conversation Summary
-         │
-         ▼
-EntityExtractionAgent
-         │
-Knowledge Graph
-```
-
 ------------------------------------------------------------------------
 
 # Components
