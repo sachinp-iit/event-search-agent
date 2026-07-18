@@ -7,6 +7,10 @@ pipeline where each agent has a single responsibility. The agents
 communicate through a shared `AgentState` and execute sequentially to
 transform a user query into a grounded response.
 
+## Agent Architecture
+
+![Agent Architecture](https://github.com/sachinp-iit/event-search-agent/blob/main/assets/Agent_Architecture.png)
+
 ------------------------------------------------------------------------
 
 # Components
