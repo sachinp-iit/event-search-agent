@@ -17,23 +17,7 @@ The module is divided into four independent components:
 
 # High-Level Architecture
 
-```text
-                  User Request
-                       │
-                       ▼
-                MemoryManager
-                       │
-        ┌──────────────┴──────────────┐
-        │                             │
-        ▼                             ▼
-ConversationMemory             ConversationSummarizer
-        │                             │
-        ▼                             ▼
- MemoryPromptHelper         LLM Summary Generation
-        │
-        ▼
-Prompt Context for LLM
-```
+![Transcript Search Memory Architecture](https://github.com/sachinp-iit/event-search-agent/blob/main/assets/Transcript%20Search%20Agent-Memory%20Module%20Architecture.png)
 
 ---
 
@@ -264,14 +248,3 @@ ConversationMemory
 - Extensible architecture for persistent storage (Redis, SQL, etc.).
 
 ---
-
-# Future Enhancements
-
-- Persistent conversation storage.
-- Redis-backed distributed sessions.
-- Automatic summarization thresholds.
-- Hybrid memory (short-term + long-term).
-- Vector memory integration.
-- Conversation analytics.
-- Memory expiration policies.
-- Token-aware context selection.
