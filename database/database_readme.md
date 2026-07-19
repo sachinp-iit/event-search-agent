@@ -13,6 +13,8 @@ The repository is intentionally focused on **structured metadata** rather than t
 
 # Architecture
 
+![Transcript Search Database Architecture](https://github.com/sachinp-iit/event-search-agent/blob/main/assets/Transcript%20Search%20Agent%20E-R%20Diagram.png)
+
 ```text
                     Client / API
                          │
