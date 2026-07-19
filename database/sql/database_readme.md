@@ -2,233 +2,235 @@
 
 ## Overview
 
-This repository contains the SQL Server database schema and asynchronous SQLAlchemy connectivity layer used to manage event metadata.
+This repository implements the foundational metadata layer for an Event Intelligence platform. It consists of:
 
-## Repository Contents
+- A SQL Server schema that stores event, speaker, and transcript metadata.
+- An asynchronous SQLAlchemy client that provides efficient and scalable database connectivity for Python applications.
 
-```
-database/
-├── sql_server_client.py
-└── event_tables.sql
-```
+The repository is intentionally focused on **structured metadata** rather than transcript content. Transcript files are expected to be stored in external storage, while this database maintains their metadata and relationships.
 
-## Architecture
+---
 
-```text
-Application
-    │
-    ▼
-get_db_session()
-    │
-AsyncSession
-    │
-SQLAlchemy Async Engine
-    │
-SQL Server
-```
-
-## SQL Server Client
-
-The `sql_server_client.py` module creates a singleton asynchronous SQLAlchemy engine and session factory.
-
-### Features
-
-- Async SQLAlchemy engine
-- Connection pooling
-- Connection health checks (`pool_pre_ping`)
-- Dependency Injection ready session provider
-- Session reuse using `async_sessionmaker`
-
-### Engine Configuration
-
-```python
-_engine = create_async_engine(
-    settings.SQL_SERVER_CONNECTION_STRING,
-    pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20
-)
-```
-
-### Session Lifecycle
+# Architecture
 
 ```text
-Request
-  │
-  ▼
-get_db_session()
-  │
-Create AsyncSession
-  │
-Yield Session
-  │
-Execute Queries
-  │
-Session Closed Automatically
+                    Client / API
+                         │
+                         ▼
+                Service / Repository Layer
+                         │
+                         ▼
+               get_db_session() Provider
+                         │
+                         ▼
+             SQLAlchemy AsyncSession Factory
+                         │
+                         ▼
+             SQLAlchemy Async Engine
+                         │
+                         ▼
+                  SQL Server Database
+       ┌──────────────┬───────────────┬──────────────┐
+       │              │               │              │
+    Events        Speakers     EventSpeakers    Transcripts
 ```
 
-## Database Schema
+---
 
-The attached SQL file defines the SQL Server schema used by the application.
+# Components
 
-```sql
--- ===========================================================================================================
--- database/sql/event_tables.sql
--- ===========================================================================================================
--- SQL Server Database Schema
---
--- Purpose:
--- - Event Metadata Repository
--- - Transcript Metadata Repository
--- - Speaker Relationships
--- - QDrant Payload Enrichment Layer
--- - Recommendation Engine Foundation
--- ===========================================================================================================
+## 1. SQL Server Client
 
+The `sql_server_client.py` module encapsulates all database connectivity.
 
--- ===========================================================================================================
--- EVENTS
--- ===========================================================================================================
-CREATE TABLE Events (
-    EventId BIGINT IDENTITY(1,1) PRIMARY KEY,
-    EventName VARCHAR(500) NOT NULL,
-    EventTopic VARCHAR(150) NOT NULL,
-    EventAgenda VARCHAR(MAX) NULL,
-    DomainName VARCHAR(75) NULL,
-    CategoryName VARCHAR(75) NULL,
-    EventStartDate DATETIME NOT NULL,
-    EventEndDate DATETIME NOT NULL,
-    AuthorName VARCHAR(75) NULL,
-    EventCompany VARCHAR(75) NULL,
-    EventLocation VARCHAR(100) NULL,
-    CreatedAt DateTime DEFAULT GETUTCDATE(),
-    UpdatedAt DateTime NULL
-);
+### Responsibilities
 
-GO
+- Creates a singleton asynchronous SQLAlchemy engine.
+- Manages database connection pooling.
+- Provides reusable asynchronous sessions.
+- Supplies sessions through dependency injection using `get_db_session()`.
 
--- ===========================================================================================================
--- SPEAKERS
--- ===========================================================================================================
-CREATE TABLE Speakers (
-    SpeakerId BIGINT IDENTITY(1,1) PRIMARY KEY,
-    SpeakerName VARCHAR(75) NOT NULL,
-    SpeakerTitle VARCHAR(75) NULL,
-    SpeakerCompany VARCHAR(75) NULL,
-    CreatedAt DateTime DEFAULT GETUTCDATE()
-);
+### Connection Pool
 
-GO
+| Setting | Purpose |
+|---------|---------|
+| pool_size=10 | Keeps up to 10 active connections ready. |
+| max_overflow=20 | Allows temporary expansion during peak load. |
+| pool_pre_ping=True | Validates connections before use, preventing stale connection errors. |
 
--- ===========================================================================================================
--- EVENT SPEAKERS
--- ===========================================================================================================
-CREATE TABLE EventSpeakers (
-    EventSpeakerId BIGINT IDENTITY(1,1) PRIMARY KEY,
-    EventId BIGINT NOT NULL,
-    SpeakerId BIGINT NOT NULL,
-    FOREIGN KEY (EventId) REFERENCES Events(EventId),
-    FOREIGN KEY (SpeakerId) REFERENCES Speakers(SpeakerId),
-    CreatedAt DateTime DEFAULT GETUTCDATE()
-);
+---
 
-GO
+# Database Design
 
--- ===========================================================================================================
--- EVENT SPEAKERS
--- ===========================================================================================================
-CREATE TABLE Transcripts (
-    TranscriptId BIGINT IDENTITY(1,1) PRIMARY KEY,
-    EventId BIGINT NULL,
-    TranscriptLocation VARCHAR(2000) NOT NULL,
-    TranscriptFileName VARCHAR(1000) NOT NULL,
-    TranscriptVersion INT DEFAULT 1,
-    IsAutoModerated BIT DEFAULT 0,
-    CreatedAt DateTime DEFAULT GETUTCDATE()
-    FOREIGN KEY (EventId) REFERENCES Events(EventId)
-);
+The schema follows a normalized relational model.
 
-GO
+## Events
 
--- ===========================================================================================================
--- INDEXES
--- ===========================================================================================================
-CREATE INDEX IX_Events_DomainName ON Events(DomainName);
+The **Events** table is the primary entity.
 
-GO
+It stores descriptive information about an event that can later be searched, categorized, processed by AI models, or linked to transcript data.
 
-CREATE INDEX IX_Events_CategoryName ON Events(CategoryName);
+### Stored information
 
-GO
+- Event name
+- Topic
+- Agenda
+- Domain
+- Category
+- Author
+- Company
+- Location
+- Start and end dates
+- Audit timestamps
 
-CREATE INDEX IX_Speakers_SpeakerName ON Speakers(SpeakerName);
+This table acts as the parent entity for transcripts and speaker mappings.
 
-GO
+---
 
-CREATE INDEX IX_Transcripts_EventId ON Transcripts(EventId);
+## Speakers
 
+The **Speakers** table stores reusable speaker information.
+
+Instead of duplicating speaker details across events, each speaker is stored once and referenced through a junction table.
+
+This design supports:
+
+- One speaker participating in multiple events
+- Consistent speaker metadata
+- Reduced data duplication
+
+Speaker attributes include:
+
+- Name
+- Title
+- Company
+- Creation timestamp
+
+---
+
+## EventSpeakers
+
+This table implements the many-to-many relationship between Events and Speakers.
+
+### Why it exists
+
+An event may have several speakers.
+
+Likewise, a speaker may appear in many different events.
+
+Instead of storing multiple speaker IDs in the Events table, this bridge table maintains normalized relationships.
+
+```text
+Events
+   │
+   │ 1
+   ▼
+EventSpeakers
+   ▲
+   │ *
+Speakers
 ```
 
-## Python Source
+---
 
-```python
-# database/sql_server_client.py
+## Transcripts
 
-from sqlalchemy.ext.asyncio import (
-    create_async_engine,
-    AsyncSession,
-    async_sessionmaker
-)
+The **Transcripts** table stores transcript metadata.
 
-from config.settings import settings
+It does **not** store transcript text.
 
-from collections.abc import AsyncGenerator
+Instead it records:
 
+- Associated event
+- Transcript storage location
+- File name
+- Version number
+- Auto moderation status
+- Creation timestamp
 
-# =========================================================
-# SQL SERVER ENGINE
-# =========================================================
+Keeping transcript content outside the database reduces database size while allowing transcript files to reside in Blob Storage, Data Lakes, or other document repositories.
 
-_engine = create_async_engine (
-    settings.SQL_SERVER_CONNECTION_STRING,
-    pool_pre_ping = True,
-    pool_size = 10,
-    max_overflow = 20
-)
+---
 
+# Relationships
 
-# =========================================================
-# SESSION FACTORY
-# =========================================================
-_session_factory = async_sessionmaker (
-    bind = _engine,
-    expire_on_commit = False,
-    class_ = AsyncSession
-)
-
-
-# =========================================================
-# SESSION PROVIDER
-# =========================================================
-async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
-    """
-    Async SQL Server session provider.
-    """
-    
-    async with _session_factory() as session:
-        yield session
+```text
+Events (1)
+   │
+   ├──────────────► Transcripts (Many)
+   │
+   └──────────────► EventSpeakers (Many)
+                          │
+                          ▼
+                     Speakers
 ```
 
-## Design
+---
 
-- Uses asynchronous database access.
-- Connection pooling improves throughput.
-- Sessions are scoped using async context managers.
-- Configuration is externalized through application settings.
+# Indexing Strategy
 
-## Future Improvements
+The schema defines indexes to optimize common query patterns.
 
-- ORM models
-- Repository layer
-- Migration scripts
-- Unit tests
+| Index | Purpose |
+|--------|---------|
+| IX_Events_DomainName | Faster filtering by business domain. |
+| IX_Events_CategoryName | Optimizes category-based searches. |
+| IX_Speakers_SpeakerName | Speeds speaker lookups. |
+| IX_Transcripts_EventId | Accelerates retrieval of transcripts for an event. |
+
+---
+
+# Typical Workflow
+
+1. Create an event.
+2. Register one or more speakers.
+3. Associate speakers with the event.
+4. Upload transcript files to external storage.
+5. Store transcript metadata in SQL Server.
+6. Retrieve metadata for downstream AI processing.
+
+---
+
+# AI Integration
+
+The schema is designed as a metadata repository for AI applications.
+
+Typical pipeline:
+
+```text
+Transcript File
+      │
+      ▼
+Chunking
+      │
+      ▼
+Embedding Generation
+      │
+      ▼
+Qdrant Vector Database
+      │
+      ▼
+Semantic Search
+      │
+      ▼
+Recommendations / RAG
+```
+
+The relational database remains the source of truth for structured metadata, while vector databases store semantic embeddings.
+
+---
+
+# Design Decisions
+
+- Asynchronous database access for scalability.
+- Normalized schema to minimize redundancy.
+- Separation of metadata from transcript content.
+- Foreign key constraints maintain referential integrity.
+- Indexed lookup columns improve query performance.
+- Repository is designed to support AI-powered search and recommendation systems.
+
+---
+# Source Files
+
+- `database/sql_server_client.py`
+- `database/sql/event_tables.sql`
